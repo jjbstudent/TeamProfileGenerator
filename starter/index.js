@@ -1,3 +1,4 @@
+// Import necessary modules
 const inquirer = require('inquirer');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
@@ -5,10 +6,12 @@ const Intern = require('./lib/Intern');
 const render = require('./src/page-template');
 const fs = require('fs');
 
-const team = [];
+// Declare an array to store team members
+let team = []; // Team array
 
-async function gatherTeamInformation() {
-    // Prompt for manager input
+// Function to prompt user for manager details
+async function promptManager() {
+    // Ask user for manager details
     const managerData = await inquirer.prompt([
         {
             type: 'input',
@@ -31,10 +34,15 @@ async function gatherTeamInformation() {
             message: "Enter manager's office number:",
         },
     ]);
-    const manager = new Manager(managerData.name, managerData.id, managerData.email, managerData.officeNumber);
-    team.push(manager); // stores information as manager 
 
-    // Prompt for engineer input
+    // Create a new Manager object and add it to the team array
+    const manager = new Manager(managerData.name, managerData.id, managerData.email, managerData.officeNumber);
+    team.push(manager);
+}
+
+// Function to prompt user for engineer details
+async function promptEngineer() {
+    // Ask user for engineer details
     const engineerData = await inquirer.prompt([
         {
             type: 'input',
@@ -57,10 +65,15 @@ async function gatherTeamInformation() {
             message: "Enter engineer's GitHub username:",
         },
     ]);
-    const engineer = new Engineer(engineerData.name, engineerData.id, engineerData.email, engineerData.github);
-    team.push(engineer); // stores information as engineer
 
-    // Prompt for intern input
+    // Create a new Engineer object and add it to the team array
+    const engineer = new Engineer(engineerData.name, engineerData.id, engineerData.email, engineerData.github);
+    team.push(engineer);
+}
+
+// Function to prompt user for intern details
+async function promptIntern() {
+    // Ask user for intern details
     const internData = await inquirer.prompt([
         {
             type: 'input',
@@ -83,26 +96,53 @@ async function gatherTeamInformation() {
             message: "Enter intern's school:",
         },
     ]);
+
+    // Create a new Intern object and add it to the team array
     const intern = new Intern(internData.name, internData.id, internData.email, internData.school);
-    team.push(intern); // stores details as Intern
+    team.push(intern);
 }
 
-//funttion to run the program 
+// Function to prompt user for the next action
+async function promptUserAction() {
+    // Ask user what they would like to do next
+    const userAction = await inquirer.prompt([
+        {
+            type: 'list',
+            name: 'action',
+            message: 'What would you like to do next?',
+            choices: ['Add an Engineer', 'Add an Intern', 'Finish building the team'],
+        },
+    ]);
+
+    return userAction.action;
+}
+
+// Main function to run the program
 async function run() {
     try {
-        await gatherTeamInformation(); // call to prompt for the questions 
+        // Prompt user for manager details
+        await promptManager();
 
-        // Generates HTML using the render function
+        let userAction;
+        // Continue prompting user until they finish building the team
+        do {
+            userAction = await promptUserAction();
+
+            // Based on user action, prompt for engineer or intern details
+            if (userAction === 'Add an Engineer') {
+                await promptEngineer();
+            } else if (userAction === 'Add an Intern') {
+                await promptIntern();
+            }
+        } while (userAction !== 'Finish building the team');
+
+        // Generate HTML using the render function
         const teamHTML = render(team);
 
-        // Optionally write the HTML to a file
+        // Write HTML to a file and log to console
         fs.writeFileSync('team.html', teamHTML, 'utf-8');
-
-        // Display the generated HTML
         console.log(teamHTML);
-        
         console.log('Team information successfully generated.');
-
     } catch (error) {
         console.error('An error occurred:', error);
     }

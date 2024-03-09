@@ -3,12 +3,12 @@
 // Import the Employee class
 const Employee = require('./Employee');
 
-// Define and export the Intern class
-class Intern extends Employee {
+// Define and export the Manager class
+class Manager extends Employee {
     constructor(name, id, email, officeNumber) {
-        // Call the base class for (Employee)
+        // Call the base class (Employee)
         super(name, id, email);
-        this.officeNumber = officeNumber; // additional 
+        this.officeNumber = officeNumber; // additional property for Manager
     }
 
     // Override the getRole method
