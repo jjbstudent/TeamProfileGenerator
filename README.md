@@ -36,6 +36,13 @@ node index.js
 npm run test
 ```
 
+## Contributing
+reference links
+- https://www.npmjs.com/package//inquirer
+- https://jestjs.io/docs/getting-started
+- https://react.dev/learn
+
+
 ## License 
 Uses MIT Licence 
 
