@@ -24,6 +24,8 @@ npm install jest
 ```
 ## Usage
 Run the application using the following command:
+![Local Image](src/team.jpg)
+
 ```bash
 node index.js
 ```
