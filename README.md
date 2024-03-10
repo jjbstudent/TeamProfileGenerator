@@ -11,6 +11,7 @@ As a manager, I want to generate a webpage that displays my team's basic info so
 - [Usage](#usage)
 - [Tests](#tests)
 - [Contributing](#contributing)
+- [Problems](#problems)
 - [License](#license)
 
 ## Installation
@@ -44,6 +45,8 @@ reference links
 - https://jestjs.io/docs/getting-started
 - https://react.dev/learn
 
+## Problems 
+I have not completed my tests sucessfully. Test incomplete I will re-submit project 
 
 ## License 
 Uses MIT Licence 
